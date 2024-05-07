@@ -62,8 +62,8 @@ class Sparrings(Base):
     __table_args__ = (UniqueConstraint("mid", name="sparringPerMatch"),)
 
     mid = Column(Integer, ForeignKey("matches.id"), primary_key=True)
-    cid = Column(Integer, ForeignKey("competitors.id"))
-    color = Column(String, nullable=False)
+    cid1 = Column(Integer, ForeignKey("competitors.id"))
+    cid2 = Column(Integer, ForeignKey("competitors.id"))
     winner = Column(Integer, nullable=False, default=-1)
 
     matches = relationship("Matches", back_populates="sparrings")
