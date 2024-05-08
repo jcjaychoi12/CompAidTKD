@@ -102,6 +102,14 @@ def get_session():
 # New Instance Methods
 def new_Competitor(fname: str, lname: str, gender: str, age: int, height: float, weight: float, rank: int, tid: int) -> Competitors:
     with get_session() as session:
+        gender = gender.lower()
+        if gender in ["m", "male", "man"]:
+            gender = "m"
+        elif gender in ["f", "female", "woman"]:
+            gender = "f"
+        else:
+            raise ValueError(f"Invalid match type: {gender} --> Value must be m/male/man or f/female/woman")
+
         new_user: Competitors = Competitors(
             first_name=fname,
             last_name=lname,
