@@ -1,8 +1,9 @@
 from dotenv import load_dotenv
 import os
-from sqlalchemy import create_engine, ForeignKey, Column, String, Integer, Float, Boolean, CHAR, UniqueConstraint
+from sqlalchemy import create_engine, ForeignKey, Column, String, Integer, Float, CHAR, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
+from contextlib import contextmanager
 
 
 # Load environment variables
@@ -82,6 +83,34 @@ class Poomsaes(Base):
 Base.metadata.create_all(bind=engine)
 
 
-# Create Session
+# Create session manager
 Session = sessionmaker(bind=engine)
-session = Session()
+
+@contextmanager
+def get_session():
+    session = Session()
+    try: 
+        yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
+
+
+# New Instance Methods
+def new_Competitor(fname: str, lname: str, gender: str, age: int, height: float, weight: float, rank: int, tid: int) -> Competitors:
+    pass
+
+def new_Team(name: str) -> Teams:
+    pass
+
+def new_Match(match_type: str) -> Matches:
+    pass
+
+def new_Sparring(mid: int, cid1: int, cid2: int) -> Sparrings:
+    pass
+
+def new_Poomsae(mid: int, cid: int) -> Poomsaes:
+    pass
