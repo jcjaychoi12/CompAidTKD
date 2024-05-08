@@ -101,16 +101,40 @@ def get_session():
 
 # New Instance Methods
 def new_Competitor(fname: str, lname: str, gender: str, age: int, height: float, weight: float, rank: int, tid: int) -> Competitors:
-    pass
+    with get_session() as session:
+        new_user: Competitors = Competitors(
+            first_name=fname,
+            last_name=lname,
+            gender=gender,
+            age=age,
+            height=height,
+            weight=weight,
+            rank=rank,
+            tid=tid
+        )
+        session.add(new_user)
+        return new_user
 
 def new_Team(name: str) -> Teams:
-    pass
+    with get_session() as session:
+        new_team: Teams = Teams(name=name)
+        session.add(new_team)
+        return new_team
 
 def new_Match(match_type: str) -> Matches:
-    pass
+    with get_session() as session:
+        new_match: Matches = Matches(match_type=match_type)
+        session.add(new_match)
+        return new_match
 
 def new_Sparring(mid: int, cid1: int, cid2: int) -> Sparrings:
-    pass
+    with get_session() as session:
+        new_sparring: Sparrings = Sparrings(mid=mid, cid1=cid1, cid2=cid2)
+        session.add(new_sparring)
+        return new_sparring
 
 def new_Poomsae(mid: int, cid: int) -> Poomsaes:
-    pass
+    with get_session() as session:
+        new_poomsae: Poomsaes = Poomsaes(mid=mid, cid=cid)
+        session.add(new_poomsae)
+        return new_poomsae
