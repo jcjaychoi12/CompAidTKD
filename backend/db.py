@@ -159,6 +159,16 @@ def new_Poomsae(mid: int, cid: int) -> Poomsaes:
 # Update Methods
 def update_Competitor(id: int, changes: dict) -> None:
     with get_session() as session:
+        if "gender" in changes:
+            new_gender = changes.get("gender").lower()
+            if new_gender in ["m", "male", "man"]:
+                new_gender = "m"
+            elif new_gender in ["f", "female", "woman"]:
+                new_gender = "f"
+            else:
+                raise ValueError(f"Invalid match type: {changes["gender"]} --> Value must be m/male/man or f/female/woman")
+            changes["gender"] = new_gender
+
         competitor = session.query(Competitors).filter(Competitors.id == id).first()
         
         if competitor is None:
