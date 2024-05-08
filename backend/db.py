@@ -138,3 +138,18 @@ def new_Poomsae(mid: int, cid: int) -> Poomsaes:
         new_poomsae: Poomsaes = Poomsaes(mid=mid, cid=cid)
         session.add(new_poomsae)
         return new_poomsae
+    
+
+# Update Methods
+def update_Competitor(id: int, changes: dict) -> None:
+    with get_session() as session:
+        competitor = session.query(Competitors).filter(Competitors.id == id).first()
+        
+        if competitor is None:
+            raise ValueError(f"No competitor found with ID {id}")
+        
+        for key, value in changes.items():
+            if hasattr(competitor, key):
+                setattr(competitor, key, value)
+            else:
+                raise ValueError(f"Attribute {key} does not exist on Competitors")
