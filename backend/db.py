@@ -153,3 +153,12 @@ def update_Competitor(id: int, changes: dict) -> None:
                 setattr(competitor, key, value)
             else:
                 raise ValueError(f"Attribute {key} does not exist on Competitors")
+
+def update_Team(id: int, name: str) -> None:
+    with get_session() as session:
+        team = session.query(Teams).filter(Teams.id == id).first()
+
+        if team is None:
+            raise ValueError(f"No team found with ID {id}")
+        
+        setattr(team, "name", name)
