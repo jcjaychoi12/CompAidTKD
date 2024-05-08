@@ -162,3 +162,21 @@ def update_Team(id: int, name: str) -> None:
             raise ValueError(f"No team found with ID {id}")
         
         setattr(team, "name", name)
+
+def update_Match(id: int, match_type: str) -> None:
+    with get_session() as session:
+        match = session.query(Matches).filter(Matches.id == id).first()
+
+        if match is None:
+            raise ValueError(f"No match found with ID {id}")
+        
+        match_type = match_type.lower()
+        if match_type in ["s", "sparring"]:
+            match_type = "s"
+        elif match_type in ["p", "poomsae"]:
+            match_type = "p"
+        else:
+            raise ValueError(f"Invalid match type: {match_type} --> Value must be s/sparing or p/poomsae")
+
+        
+        setattr(match, "match_type", match_type[0])
