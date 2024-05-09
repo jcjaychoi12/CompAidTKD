@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os
-from sqlalchemy import create_engine, ForeignKey, Column, String, Integer, Float, CHAR, UniqueConstraint
+from sqlalchemy import create_engine, delete, ForeignKey, Column, String, Integer, Float, CHAR, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from contextlib import contextmanager
@@ -235,20 +235,30 @@ def update_Poomsae(mid: int, changes: dict) -> None:
             
 
 # Delete Methods
-def delete_Competitor() -> None:
-    pass
+def delete_Competitor(id: int) -> None:
+    with get_session() as session:
+        del_competitor = delete(Competitors).where(Competitors.id == id)
+        session.execute(del_competitor)
 
-def delete_Team() -> None:
-    pass
+def delete_Team(id: int) -> None:
+    with get_session() as session:
+        del_team = delete(Teams).where(Teams.id == id)
+        session.execute(del_team)
 
-def delete_Match() -> None:
-    pass
+def delete_Match(id: int) -> None:
+    with get_session() as session:
+        del_match = delete(Matches).where(Matches.id == id)
+        session.execute(del_match)
 
-def delete_Sparring() -> None:
-    pass
+def delete_Sparring(mid: int) -> None:
+    with get_session() as session:
+        del_sparring = delete(Sparrings).where(Sparrings.mid == mid)
+        session.execute(del_sparring)
 
-def delete_Poomsae() -> None:
-    pass
+def delete_Poomsae(mid: int, cid: int) -> None:
+    with get_session() as session:
+        del_Poomsae = delete(Poomsaes).where(Poomsaes.mid == mid and Poomsaes.cid == cid)
+        session.execute(del_Poomsae)
 
 
 # Get Methods
