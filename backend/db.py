@@ -206,3 +206,29 @@ def update_Match(id: int, match_type: str) -> None:
 
         
         setattr(match, "match_type", match_type[0])
+
+def update_Sparring(mid: int, changes: dict) -> None:
+    with get_session() as session:
+        sparring = session.query(Sparrings).filter(Sparrings.mid == mid).first()
+
+        if sparring is None:
+            raise ValueError(f"No sparring match found with match ID {mid}")
+        
+        for key, value in changes.items():
+            if hasattr(sparring, key):
+                setattr(sparring, key, value)
+            else:
+                raise ValueError(f"Attribute {key} does not exist on Sparrings")
+            
+def update_Poomsae(mid: int, changes: dict) -> None:
+    with get_session() as session:
+        poomsae = session.query(Poomsaes).filter(Poomsaes.mid == mid).first()
+
+        if poomsae is None:
+            raise ValueError(f"No poomsae match found with match ID {mid}")
+        
+        for key, value in changes.items():
+            if hasattr(poomsae, key):
+                setattr(poomsae, key, value)
+            else:
+                raise ValueError(f"Attribute {key} does not exist on Poomsaes")
