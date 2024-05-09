@@ -262,17 +262,22 @@ def delete_Poomsae(mid: int, cid: int) -> None:
 
 
 # Get Methods
-def get_Competitor() -> Competitors:
-    pass
+def get_Competitor(id: int) -> Competitors:
+    with get_session() as session:
+        return session.query(Competitors).filter(Competitors.id == id).first()
 
-def get_Team() -> Teams:
-    pass
+def get_Team(id: int) -> Teams:
+    with get_session() as session:
+        return session.query(Teams).filter(Teams.id == id).first()
 
-def get_Match() -> Matches:
-    pass
+def get_Match(id: int) -> Matches:
+    with get_session() as session:
+        return session.query(Matches).filter(Matches.id == id).first()
 
-def get_Sparring() -> Sparrings:
-    pass
+def get_Sparring(mid: int) -> Sparrings:
+    with get_session() as session:
+        return session.query(Sparrings).filter(Sparrings.mid == mid).first()
 
-def get_Poomsae() -> Poomsaes:
-    pass
+def get_Poomsae(mid: int, cid: int) -> Poomsaes:
+    with get_session() as session:
+        return session.query(Poomsaes).filter(Poomsaes.mid == mid and Poomsaes.cid == cid).first()
