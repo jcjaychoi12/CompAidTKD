@@ -232,3 +232,37 @@ def update_Poomsae(mid: int, changes: dict) -> None:
                 setattr(poomsae, key, value)
             else:
                 raise ValueError(f"Attribute {key} does not exist on Poomsaes")
+            
+
+# Delete Methods
+def delete_Competitor() -> None:
+    pass
+
+def delete_Team() -> None:
+    pass
+
+def delete_Match() -> None:
+    pass
+
+def delete_Sparring() -> None:
+    pass
+
+def delete_Poomsae() -> None:
+    pass
+
+
+# Get Methods
+def get_Competitor() -> Competitors:
+    pass
+
+def get_Team() -> Teams:
+    pass
+
+def get_Match() -> Matches:
+    pass
+
+def get_Sparring() -> Sparrings:
+    pass
+
+def get_Poomsae() -> Poomsaes:
+    pass
