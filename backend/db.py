@@ -16,6 +16,22 @@ Base = declarative_base()
 engine = create_engine(PG_URL, echo=False)
 
 
+# Create session manager
+Session = sessionmaker(bind=engine)
+
+@contextmanager
+def get_session():
+    session = Session()
+    try: 
+        yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
+
+
 # Tables
 class Competitors(Base):
     __tablename__ = "competitors"
@@ -36,6 +52,30 @@ class Competitors(Base):
 
     def __repr__(self):
         return f"({self.last_name}, {self.first_name})"
+    
+    @classmethod
+    def new_Competitor(cls, fname: str, lname: str, gender: str, age: int, height: float, weight: float, rank: int, tid: int):
+        with get_session() as session:
+            gender = gender.lower()
+            if gender in ["m", "male", "man"]:
+                gender = "m"
+            elif gender in ["f", "female", "woman"]:
+                gender = "f"
+            else:
+                raise ValueError(f"Invalid match type: {gender} --> Value must be m/male/man or f/female/woman")
+
+            new_user = cls(
+                first_name=fname,
+                last_name=lname,
+                gender=gender,
+                age=age,
+                height=height,
+                weight=weight,
+                rank=rank,
+                tid=tid
+            )
+            session.add(new_user)
+            return new_user
     
 class Teams(Base):
     __tablename__ = "teams"
@@ -83,45 +123,11 @@ class Poomsaes(Base):
 Base.metadata.create_all(bind=engine)
 
 
-# Create session manager
-Session = sessionmaker(bind=engine)
 
-@contextmanager
-def get_session():
-    session = Session()
-    try: 
-        yield session
-        session.commit()
-    except:
-        session.rollback()
-        raise
-    finally:
-        session.close()
 
 
 # New Instance Methods
-def new_Competitor(fname: str, lname: str, gender: str, age: int, height: float, weight: float, rank: int, tid: int) -> Competitors:
-    with get_session() as session:
-        gender = gender.lower()
-        if gender in ["m", "male", "man"]:
-            gender = "m"
-        elif gender in ["f", "female", "woman"]:
-            gender = "f"
-        else:
-            raise ValueError(f"Invalid match type: {gender} --> Value must be m/male/man or f/female/woman")
 
-        new_user: Competitors = Competitors(
-            first_name=fname,
-            last_name=lname,
-            gender=gender,
-            age=age,
-            height=height,
-            weight=weight,
-            rank=rank,
-            tid=tid
-        )
-        session.add(new_user)
-        return new_user
 
 def new_Team(name: str) -> Teams:
     with get_session() as session:
