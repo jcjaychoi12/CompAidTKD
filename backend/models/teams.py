@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, CHAR, Float, ForeignKey, delete
+from sqlalchemy import Column, Integer, String, delete
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from db import get_session
