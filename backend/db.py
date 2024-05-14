@@ -77,7 +77,7 @@ class Competitors(Base):
                 tid=tid
             )
             session.add(new_user)
-            return new_user
+            return new_user.json()
         
     @classmethod
     def update_Competitor(cls, id: int, changes: dict):
