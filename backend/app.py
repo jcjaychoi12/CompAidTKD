@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from db import *
 
 app = Flask(__name__)
@@ -7,25 +7,75 @@ app = Flask(__name__)
 def index():
     return "<h1>CompAidTKD -- Backend</h1>"
 
-@app.route('/competitors')
+@app.route('/competitors', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def competitors():
-    return "Competitors"
+    args = request.args
+    met = request.method
 
-@app.route('/teams')
+    if met == "GET":
+        pass
+    elif met == "POST":
+        pass
+    elif met == "PUT":
+        pass
+    elif met == "DELETE":
+        pass
+
+@app.route('/teams', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def teams():
-    return "Teams"
+    args = request.args
+    met = request.method
 
-@app.route('/matches')
+    if met == "GET":
+        pass
+    elif met == "POST":
+        pass
+    elif met == "PUT":
+        pass
+    elif met == "DELETE":
+        pass
+
+@app.route('/matches', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def matches():
-    return "Matches"
+    args = request.args
+    met = request.method
 
-@app.route('/sparrings')
+    if met == "GET":
+        pass
+    elif met == "POST":
+        pass
+    elif met == "PUT":
+        pass
+    elif met == "DELETE":
+        pass
+
+@app.route('/sparrings', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def sparrings():
-    return "Sparrings"
+    args = request.args
+    met = request.method
 
-@app.route('/poomsaes')
+    if met == "GET":
+        pass
+    elif met == "POST":
+        pass
+    elif met == "PUT":
+        pass
+    elif met == "DELETE":
+        pass
+
+@app.route('/poomsaes', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def poomsaes():
-    return "Poomsaes"
+    args = request.args
+    met = request.method
+
+    if met == "GET":
+        pass
+    elif met == "POST":
+        pass
+    elif met == "PUT":
+        pass
+    elif met == "DELETE":
+        pass
 
 
 if __name__ == "__main__":
