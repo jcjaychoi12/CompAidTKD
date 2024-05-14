@@ -112,7 +112,20 @@ class Competitors(Base):
     @classmethod
     def get_Competitor(cls, id: int):
         with get_session() as session:
-            return session.query(cls).filter(cls.id == id).first()
+            return session.query(cls).filter(cls.id == id).first().json()
+        
+    def json(self):
+        return {
+            "id": self.id,
+            "firstName": self.first_name,
+            "lastName": self.last_name,
+            "gender": self.gender,
+            "age": self.age,
+            "weight": self.weight,
+            "height": self.height,
+            "rank": self.rank,
+            "tid": self.tid
+        }
 
 class Teams(Base):
     __tablename__ = "teams"
