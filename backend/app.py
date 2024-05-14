@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from db import *
 
 app = Flask(__name__)
@@ -13,7 +13,11 @@ def competitors():
     met = request.method
 
     if met == "GET":
-        pass
+        if "id" not in args:
+            return jsonify({"message": "Error: id not specified"}), 400
+        
+        get_result = Competitors.get_Competitor(int(args.get("id")))
+        return get_result
     elif met == "POST":
         pass
     elif met == "PUT":
