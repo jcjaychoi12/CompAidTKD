@@ -193,7 +193,7 @@ class Matches(Base):
 
             new_match = cls(match_type=match_type)
             session.add(new_match)
-            return new_match
+            return new_match.json()
         
     @classmethod
     def update_Match(cls, id: int, match_type: str):
@@ -223,7 +223,14 @@ class Matches(Base):
     @classmethod
     def get_Match(cls, id: int):
         with get_session() as session:
-            return session.query(cls).filter(cls.id == id).first()
+            return session.query(cls).filter(cls.id == id).first().json()
+
+    def json(self):
+        return {
+            "id": self.id,
+            "type": self.match_type,
+            "status": self.status
+        }
 
 class Sparrings(Base):
     __tablename__ = "sparrings"
