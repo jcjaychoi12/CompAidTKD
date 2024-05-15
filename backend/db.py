@@ -250,7 +250,7 @@ class Sparrings(Base):
         with get_session() as session:
             new_sparring = cls(mid=mid, cid1=cid1, cid2=cid2)
             session.add(new_sparring)
-            return new_sparring
+            return new_sparring.json()
         
     @classmethod
     def update_Sparring(cls, mid: int, changes: dict):
@@ -275,7 +275,15 @@ class Sparrings(Base):
     @classmethod
     def get_Sparring(cls, mid: int):
         with get_session() as session:
-            return session.query(cls).filter(cls.mid == mid).first()
+            return session.query(cls).filter(cls.mid == mid).first().json()
+        
+    def json(self):
+        return {
+            "mid": self.mid,
+            "cid1": self.cid1,
+            "cid2": self.cid2,
+            "winner": self.winner
+        }
 
 class Poomsaes(Base):
     __tablename__ = "poomsaes"
