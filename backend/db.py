@@ -300,7 +300,7 @@ class Poomsaes(Base):
         with get_session() as session:
             new_poomsae = cls(mid=mid, cid=cid)
             session.add(new_poomsae)
-            return new_poomsae
+            return new_poomsae.json()
         
     @classmethod
     def update_Poomsae(cls, mid: int, changes: dict):
@@ -325,7 +325,15 @@ class Poomsaes(Base):
     @classmethod
     def get_Poomsae(cls, mid: int, cid: int):
         with get_session() as session:
-            return session.query(cls).filter(cls.mid == mid and cls.cid == cid).first()
+            return session.query(cls).filter(cls.mid == mid and cls.cid == cid).first().json()
+        
+    def json(self):
+        return {
+            "id": self.id,
+            "mid": self.mid,
+            "cid": self.cid,
+            "result": self.result
+        }
 
 
 # Upload tables into database
