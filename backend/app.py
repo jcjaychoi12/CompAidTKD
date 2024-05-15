@@ -7,17 +7,19 @@ app = Flask(__name__)
 def index():
     return "<h1>CompAidTKD -- Backend</h1>"
 
-@app.route('/competitors', methods=['GET', 'PUT', 'POST', 'DELETE'])
+@app.route('/competitors', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def competitors():
     args = request.args
     met = request.method
 
     if met == "GET":
         if "id" not in args:
-            return jsonify({"message": "Error: id not specified"}), 400
-        
-        get_result = Competitors.get_Competitor(int(args.get("id")))
-        return get_result
+            return jsonify({"message": "Error: valid id not found"}), 400
+        try:
+            get_result = Competitors.get_Competitor(int(args.get("id")))
+            return jsonify(get_result)
+        except Exception as e:
+            return jsonify({"message": f"Error: {str(e)}"}), 500
     elif met == "POST":
         pass
     elif met == "PUT":
