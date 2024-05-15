@@ -140,7 +140,7 @@ class Teams(Base):
         with get_session() as session:
             new_team = cls(name=name)
             session.add(new_team)
-            return new_team
+            return new_team.json()
         
     @classmethod
     def update_Team(cls, id: int, name: str):
@@ -161,7 +161,13 @@ class Teams(Base):
     @classmethod
     def get_Team(cls, id: int):
         with get_session() as session:
-            return session.query(cls).filter(cls.id == id).first()
+            return session.query(cls).filter(cls.id == id).first().json()
+
+    def json(self):
+        return {
+            "id": self.id,
+            "name": self.name
+        }
 
 class Matches(Base):
     __tablename__ = "matches"
